@@ -1,4 +1,4 @@
-package locpaniccollector
+package logpaniccollector
 
 import (
 	"bytes"
