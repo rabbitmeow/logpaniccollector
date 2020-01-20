@@ -74,6 +74,7 @@ func main() {
 
 # To Do
 
+- [ ] simplify middleware
 - [ ] feature cron for auto clean the file
 - [ ] feature enable/disable [the Filebeat multiline support](https://www.elastic.co/guide/en/beats/filebeat/current/multiline-examples.html) (currently is enabled)
 - [ ] feature enable/disable panic log 1 line mode as a follow up from [Promtail issue](https://github.com/grafana/loki/issues/74)
