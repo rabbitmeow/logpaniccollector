@@ -28,17 +28,15 @@ import (
 	"github.com/rabbitmeow/logpaniccollector"
 )
 
-//Middleware is
+//Middleware ...
 type Middleware struct{}
 
 // PanicCatcher is use for collecting panic that happened in endpoint
 func (w *Middleware) PanicCatcher() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		defer func() {
-			rec := recover()
-			if rec != nil {
-				errPanic := fmt.Sprintf("Endpoint: %s - panic: %v", c.Request.RequestURI, rec)
-				logpaniccollector.WritePanic(errPanic, debug.Stack())
+			isPanic := logpaniccollector.RecoverPanic(c.Request.RequestURI, recover())
+			if isPanic {
 				c.JSON(500, gin.H{
 					"status":  500,
 					"message": "Internal server error",
@@ -74,7 +72,7 @@ func main() {
 
 # To Do
 
-- [ ] simplify middleware
+- [x] simplify middleware
 - [ ] feature cron for auto clean the file
 - [ ] feature enable/disable [the Filebeat multiline support](https://www.elastic.co/guide/en/beats/filebeat/current/multiline-examples.html) (currently is enabled)
 - [ ] feature enable/disable panic log 1 line mode as a follow up from [Promtail issue](https://github.com/grafana/loki/issues/74)

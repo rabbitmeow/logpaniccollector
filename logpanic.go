@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"runtime/debug"
 )
 
 var fullPathToFile string
@@ -12,6 +13,16 @@ var fullPathToFile string
 // SetFile for setting your full path to file. It will create the file that contains your log or panic. E.g /var/log/service.log
 func SetFile(fullPath string) {
 	fullPathToFile = fullPath
+}
+
+// RecoverPanic recover your panic, then write it in your log file
+func RecoverPanic(uri string, recover interface{}) bool {
+	if recover != nil {
+		errPanic := fmt.Sprintf("endpoint: %s | panic: %v", uri, recover)
+		WritePanic(errPanic, debug.Stack())
+		return true
+	}
+	return false
 }
 
 // WriteLog is use for write log to defined log file
