@@ -32,10 +32,10 @@ import (
 type Middleware struct{}
 
 // PanicCatcher is use for collecting panic that happened in endpoint
-func (w *Middleware) PanicCatcher() gin.HandlerFunc {
+func (w *Middleware) PanicCatcher(lpc *logpaniccollector.LogPanic) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		defer func() {
-			isPanic := logpaniccollector.RecoverPanic(c.Request.RequestURI, recover())
+			isPanic := lpc.RecoverPanic(c.Request.RequestURI, recover())
 			if isPanic {
 				c.JSON(500, gin.H{
 					"status":  500,
