@@ -6,40 +6,54 @@ import (
 	"log"
 	"os"
 	"runtime/debug"
+
+	"github.com/robfig/cron/v3"
 )
 
-var fullPathToFile string
+// LogPanic ...
+type LogPanic struct {
+	LogFile string
+}
 
-// SetFile for setting your full path to file. It will create the file that contains your log or panic. E.g /var/log/service.log
-func SetFile(fullPath string) {
-	fullPathToFile = fullPath
+// New making new instance of this library
+func New() *LogPanic {
+	lpc := &LogPanic{
+		LogFile: "service.log",
+	}
+	return lpc
+}
+
+// AutoRemoveLog for auto removing the log file based on the time.Duration
+func (l *LogPanic) AutoRemoveLog(cronFormat string) {
+	c := cron.New()
+	c.AddFunc(cronFormat, func() {
+		os.Remove(l.LogFile)
+	})
+	c.Start()
 }
 
 // RecoverPanic recover your panic, then write it in your log file
-func RecoverPanic(uri string, recover interface{}) bool {
+func (l *LogPanic) RecoverPanic(uri string, recover interface{}) bool {
 	if recover != nil {
 		errPanic := fmt.Sprintf("endpoint: %s | panic: %v", uri, recover)
-		WritePanic(errPanic, debug.Stack())
+		l.WritePanic(errPanic, debug.Stack())
 		return true
 	}
 	return false
 }
 
 // WriteLog is use for write log to defined log file
-func WriteLog(logMsg string) {
-	writer(logMsg, "]")
+func (l *LogPanic) WriteLog(logMsg string) {
+	l.writer(logMsg, "]")
 }
 
 // WritePanic is use for write panic to defined log file
-func WritePanic(e interface{}, stack []byte) {
-	writer(e, "] \n", string(stack))
+func (l *LogPanic) WritePanic(e interface{}, stack []byte) {
+	l.writer(e, "] \n", string(stack))
 }
 
-func writer(errFormat ...interface{}) {
-	if fullPathToFile == "" {
-		fullPathToFile = "service.log"
-	}
-	f, err := os.OpenFile(fullPathToFile, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
+func (l *LogPanic) writer(errFormat ...interface{}) {
+	f, err := os.OpenFile(l.LogFile, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
 	if err != nil {
 		log.Fatalf("error opening log file: %v", err)
 	}
