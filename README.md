@@ -1,3 +1,5 @@
+[![GoDoc](https://godoc.org/github.com/rabbitmeow/logpaniccollector?status.svg)](https://godoc.org/github.com/rabbitmeow/logpaniccollector)
+
 # What is it ?
 
 The [Golang](https://golang.org) package for writing log or http panic into file. You can combine this package with [Filebeat](https://www.elastic.co/products/beats/filebeat) or [Promtail](https://github.com/grafana/loki/tree/master/docs/clients/promtail).

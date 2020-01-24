@@ -11,10 +11,11 @@ import (
 
 func main() {
 	r := gin.Default()
-	logpaniccollector.SetFile("log.log")
+	lpc := logpaniccollector.New()
+	lpc.LogFile = "log.log"
+	lpc.AutoRemoveLog("* * * * *")
 	var midd = new(middleware.Middleware)
-	r.Use(midd.PanicCatcher())
-	logpaniccollector.WriteLog("test log")
+	r.Use(midd.PanicCatcher(lpc))
 	r.GET("/", func(c *gin.Context) {
 		c.JSON(200, gin.H{
 			"message": "hello there",
