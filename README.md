@@ -1,4 +1,4 @@
-[![GoDoc](https://godoc.org/github.com/rabbitmeow/logpaniccollector?status.svg)](https://godoc.org/github.com/rabbitmeow/logpaniccollector)
+[![GoDoc](https://godoc.org/github.com/vinbyte/logpaniccollector?status.svg)](https://godoc.org/github.com/vinbyte/logpaniccollector)
 
 # What is it ?
 
@@ -6,17 +6,17 @@ The [Golang](https://golang.org) package for writing log or http panic into file
 
 ## Install
 
-`go get -u github.com/rabbitmeow/logpaniccollector`
+`go get -u github.com/vinbyte/logpaniccollector`
 
 You can also use vendoring tools like [Govendor](https://github.com/kardianos/govendor), [Dep](https://github.com/golang/dep), or something else.
 
 ## Docs
 
-<https://godoc.org/github.com/rabbitmeow/logpaniccollector>
+<https://godoc.org/github.com/vinbyte/logpaniccollector>
 
 ## Usage
 
-Please make your middleware to use the [WritePanic](https://godoc.org/github.com/rabbitmeow/logpaniccollector#WritePanic) function. Below is the example of Gin middleware
+Please make your middleware to use the [WritePanic](https://godoc.org/github.com/vinbyte/logpaniccollector#WritePanic) function. Below is the example of Gin middleware
 
 middleware/middleware.go :
 ```
@@ -27,7 +27,7 @@ import (
 	"runtime/debug"
 
 	"github.com/gin-gonic/gin"
-	"github.com/rabbitmeow/logpaniccollector"
+	"github.com/vinbyte/logpaniccollector"
 )
 
 //Middleware ...
@@ -57,7 +57,7 @@ package main
 
 import (
 	"[YOUR_MODULE_NAME]/middleware"
-	"github.com/rabbitmeow/logpaniccollector"
+	"github.com/vinbyte/logpaniccollector"
 	"github.com/gin-gonic/gin"
 )
 

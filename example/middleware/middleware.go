@@ -2,7 +2,7 @@ package middleware
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/rabbitmeow/logpaniccollector"
+	"github.com/vinbyte/logpaniccollector"
 )
 
 //Middleware is

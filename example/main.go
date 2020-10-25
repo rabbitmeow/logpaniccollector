@@ -4,7 +4,7 @@ import (
 	"example/middleware"
 	"fmt"
 
-	"github.com/rabbitmeow/logpaniccollector"
+	"github.com/vinbyte/logpaniccollector"
 
 	"github.com/gin-gonic/gin"
 )

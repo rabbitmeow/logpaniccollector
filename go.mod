@@ -1,4 +1,4 @@
-module github.com/rabbitmeow/logpaniccollector
+module github.com/vinbyte/logpaniccollector
 
 go 1.13
 
